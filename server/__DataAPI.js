@@ -12,9 +12,6 @@
  * 
  */
 
-
-
-
 var __DataAPI = Class.create();
 __DataAPI.prototype = {
     initialize: function () {},
