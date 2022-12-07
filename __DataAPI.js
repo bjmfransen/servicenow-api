@@ -4,6 +4,12 @@
  * 7 December 2022
  * Bert-Jan Fransen
  * 
+ * Content:
+ * -getRecordList
+ * -getRecord
+ * -insertRecord
+ * -createProcessRecordFunction
+ * 
  */
 
 
