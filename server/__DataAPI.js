@@ -11,7 +11,6 @@
  * -createProcessRecordFunction
  * 
  */
-
 var __DataAPI = Class.create();
 __DataAPI.prototype = {
     initialize: function () {},
@@ -28,7 +27,7 @@ __DataAPI.prototype = {
      * @param {boolean} options.orderDescending - true for descending order, false (default) for ascending
      * @param {number} options.max - the number of records to be returned, -1 returns all
      * @param {string} options.returnValue - what field values to return. values can be value, display, both - for returning values, display values or both
-     * @returns {record[]} - array with records and name value pairs of the fieldList (both display and value).
+     * @returns {record[]} - array with records and name value pairs of the fieldList (display, value or both).
      */
     getRecordList: function (options) {
         if (typeof options != 'object') throw Error('No options provided', 'getRecordListOptions');
@@ -78,7 +77,25 @@ __DataAPI.prototype = {
         }
 
         return result;
-    },   
+    },
+    
+    /**
+     * Returns a record list built using the settings from an export
+     * @param {string} name - name of the export definition
+     * @returns {record[]} - array with records and name value pairs of the fieldList's values.
+     */
+    runExportDefinition: function(name){
+        var grExportDefinition = new GlideRecord('sys_export_definition');
+        if (grExportDefinition.get('name', arg)){
+            return this.getRecordList({
+                table: grExportDefinition.getValue('table_name'),
+                query: grExportDefinition.getValue('filter'),
+                fieldList: grExportDefinition.getValue('field_list')
+            })
+        } else {
+            throw Error('EXport definition \''+name+' \' not found', 'runExportDefinition');
+        }
+    },
 
     /**
      * Retrieves a single record.
